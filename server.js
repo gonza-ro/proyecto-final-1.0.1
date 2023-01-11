@@ -2,10 +2,10 @@ console.clear();
 import express from 'express'
 import dotenv from 'dotenv';
 import accountRouter from './routers/productos.js';  // aca lo meto como un midd
+import { Server } from 'socket.io';
 
 
-//------------------------------ Router -----------------------------
-/* basicamente es una mini app de express contenida en una app mas grande */
+
 
 const App = express();
 //--------------------------------------------------
@@ -17,7 +17,7 @@ App.use(express.static('public'))
 
 App.use(express.urlencoded({extended: true}))     // con esto podemos entender y recibir datos desde un formulario, proveniente de una page html
 
-const router = express.Router(); 
+/* const router = express.Router();  */
 // router de express.Ayuda a crear manejadores de rutas encadenables
 
 App.use(express.json())  // --> para entender el body en formato JSON

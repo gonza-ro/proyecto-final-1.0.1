@@ -54,23 +54,21 @@ accountRouter.post("/", (req, res) => {
 
 //--------------------------------------------------
 // Actualizar una cuenta por su nombre
-accountRouter.patch("/:id", (req, res) => {
+accountRouter.put("/:id", (req, res) => {
   const { id } = req.params;
   const { name } = req.body;
-
-  if (!name) {
-    return res.status(400).send();
-  }
-
-  const product = PRODU_DDBB.find((us) => us.id === id);
-
+ const product = PRODU_DDBB.find((pro) => pro.id === id);
   if (!product) {
-    res.status(404).send();
+    return res.status(400).send('No existe');
+  } else if(product) {
+    name = (`<input type="text" value="Ingrese nombre nuevo: " />`)
+    producto.name = name; // actualizo
+
+    res.status(200).send(product);
   }
 
-  product.name = name; // actualizo
-
-  return res.send(); //dev func
+/*   product.id = id; */
+  return res.send('Actualizacion Confirmada'); //dev func
 });
 
 //-------------------------------------------------------
@@ -81,12 +79,12 @@ accountRouter.delete("/:id", (req, res) => {
   // findIndex --> si encuentra = true. Si no = -1
   
   if (proIndex === -1) {
-    return res.status(404).send();
+    return res.status(404).send('No existe');
   }
 
   PRODU_DDBB.splice(proIndex, 1); // aca borramos solo 1 usuario de la DB.
 
-  return res.send(); // Esto nos dice de que todo ha salido bien
+  return res.send('Producto borrado por ID'); // Esto nos dice de que todo ha salido bien
   // se tiene que mandar una res, para que no se quede tildado
 });
 
