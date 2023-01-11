@@ -1,6 +1,6 @@
 import express from "express";
 
-import { USERS_DDBB } from '../ddbb.js';
+import { PRODU_DDBB } from '../ddbb.js';
 
 
 const accountRouter = express.Router();
@@ -10,41 +10,42 @@ const accountRouter = express.Router();
 
 // es un midd. Aca entra en juego (next) --> es un CB
 accountRouter.use((req, res, next) =>{;   // esta func se ejecuta antes que el end-point
-    console.log(req.ip)
+     
+//* console.log(req.ip) */
 
     next();
 })
 //--------------------------------------------------
 // Obten detalles de una cuenta a partir de su ID
-accountRouter.get("/:_id", (req, res) => {
-  const { _id } = req.params;
-  const user = USERS_DDBB.find((us) => us._id === _id);
+accountRouter.get("/:id", (req, res) => {
+  const { id } = req.params;
+  const product = PRODU_DDBB.find((us) => us.id === id);
 
-  if (!user) {
-    return res.status(404).send();
+  if (!product) {
+    return res.status(404).send('Producto no encontrado');
   }
 
-  return res.send(user);
+  return res.send(product);
 });
 
 //-------------------------------------------------
 // Crear una cuenta nueva, a partir de ID, y name
 accountRouter.post("/", (req, res) => {
-  const { _id, name } = req.body;
+  const { id, name } = req.body;
 
-  if (!_id || !name) {
-    return res.status(400).send();
+  if (!id || !name) {
+    return res.status(400).send('No existe');
   }
 
-  const user = USERS_DDBB.find((us) => us._id === _id);
+  const product = PRODU_DDBB.find((us) => us.id === id);
 
-  if (user) {
-    return res.status(409).send();
+  if (product) {
+    return res.status(409).send('Ya existe el producto');
   }
   // error de conflicto(409) : existe lo que quiero crear
 
-  USERS_DDBB.push({
-    _id,
+  PRODU_DDBB.push({
+    id,
     name,
   });
 
@@ -53,37 +54,37 @@ accountRouter.post("/", (req, res) => {
 
 //--------------------------------------------------
 // Actualizar una cuenta por su nombre
-accountRouter.patch("/:_id", (req, res) => {
-  const { _id } = req.params;
+accountRouter.patch("/:id", (req, res) => {
+  const { id } = req.params;
   const { name } = req.body;
 
   if (!name) {
     return res.status(400).send();
   }
 
-  const user = USERS_DDBB.find((us) => us._id === _id);
+  const product = PRODU_DDBB.find((us) => us.id === id);
 
-  if (!user) {
+  if (!product) {
     res.status(404).send();
   }
 
-  user.name = name; // actualizo
+  product.name = name; // actualizo
 
   return res.send(); //dev func
 });
 
 //-------------------------------------------------------
 // Eliminar un a cuenta
-accountRouter.delete("/:_id", (req, res) => {
-  const { _id } = req.params;
-  const userIndex = USERS_DDBB.findIndex((us) => us._id === _id);
+accountRouter.delete("/:id", (req, res) => {
+  const { id } = req.params;
+  const proIndex = PRODU_DDBB.findIndex((us) => us.id === id);
   // findIndex --> si encuentra = true. Si no = -1
   
-  if (userIndex === -1) {
+  if (proIndex === -1) {
     return res.status(404).send();
   }
 
-  USERS_DDBB.splice(userIndex, 1); // aca borramos solo 1 usuario de la DB.
+  PRODU_DDBB.splice(proIndex, 1); // aca borramos solo 1 usuario de la DB.
 
   return res.send(); // Esto nos dice de que todo ha salido bien
   // se tiene que mandar una res, para que no se quede tildado
