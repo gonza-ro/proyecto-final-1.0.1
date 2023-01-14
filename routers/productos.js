@@ -9,32 +9,43 @@ const accountRouter = express.Router();
 
 
 // es un midd. Aca entra en juego (next) --> es un CB
-accountRouter.use((req, res, next) =>{;   // esta func se ejecuta antes que el end-point
-     
-//* console.log(req.ip) */
+accountRouter.use((req, res, next) =>{   // esta func se ejecuta antes que el end-point
+
+/* console.log(req.ip) */
 
     next();
 })
 //--------------------------------------------------
-// Obten detalles de una cuenta a partir de su ID
-accountRouter.get("/:id", (req, res) => {
+// Obten detalles de una cuenta a partir de su ID. 
+//Vamos a usar el Cliente Postman, para las peticiones http
+accountRouter.get("/:id", (req, res) => {   
   const { id } = req.params;
-  const product = PRODU_DDBB.find((us) => us.id === id);
+  const {idProduct} = PRODU_DDBB.find((e) => e.id === id);
+  /* const {nameProduct} = PRODU_DDBB.find((us) => us.name === name); */
 
-  if (!product) {
+  if (!idProduct /* || !nameProduct */ ) {
     return res.status(404).send('Producto no encontrado');
   }
-
-  return res.send(product);
+  return( res.send(idProduct), 'Producto encontrado'/* , res.send(nameProduct)  */);
+  
 });
 
 //-------------------------------------------------
 // Crear una cuenta nueva, a partir de ID, y name
 accountRouter.post("/", (req, res) => {
-  const { id, name } = req.body;
-
-  if (!id || !name) {
+  const { id} = req.body;
+  const {idProduct} = PRODU_DDBB.find((us) => us.id === id);
+  const {nameProduct} = PRODU_DDBB.find((us) => us.name === name);
+  if (!id || !name){
     return res.status(400).send('No existe');
+    const newPro = { id:'' , name: ''}; 
+    PRODU_DDBB.push(newPro);
+    PRODU_DDBB.newPro.id = id;
+    PRODU_DDBB.newPro.name = name;
+    console.log( PRODU_DDBB.newPro);
+  } else {
+    console.log( PRODU_DDBB.newPro);
+    return res.status(200).send('Ya existe');
   }
 
   const product = PRODU_DDBB.find((us) => us.id === id);
@@ -62,7 +73,7 @@ accountRouter.put("/:id", (req, res) => {
     return res.status(400).send('No existe');
   } else if(product) {
     name = (`<input type="text" value="Ingrese nombre nuevo: " />`)
-    producto.name = name; // actualizo
+    product.name = name; // actualizo
 
     res.status(200).send(product);
   }
@@ -90,3 +101,48 @@ accountRouter.delete("/:id", (req, res) => {
 
 
 export default accountRouter;
+
+
+
+//---------------------- Usando el Require --------------------------
+// practica con module.exports = {suma, resta, multiplicacion}
+//file = operaciones.js
+/* const suma = (numA, numB) =>{ return numA + numB }
+
+const resta = (numA, numB) =>{ return numA - numB }
+
+const multiplicacion = (numA, numB) =>{ return numA * numB } */
+
+
+//---------------------
+
+//file = index.js
+/* const operaciones = require('/operaciones.js')
+console.log(operaciones);  --> node index.js */
+
+
+//---------------------
+
+//file = users.json
+
+//
+/* {
+  'users': [
+    {
+    'name': 'Talos',
+    'canal': 'Deva'
+    },
+    {
+      'name': 'Gonza',
+      'age': 27
+    }
+  ]
+}
+
+--> lo mustro por consola --> console.log(users) --> y lo ejecuto con node users.js  vid:3  */ 
+
+//----------- modelo OSI ------------ vid:4
+//standar de intercomunicacion entre sistemas
+
+//------------ Protocolo HTTP-----------
+//client pide primero ----> nos response

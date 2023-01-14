@@ -15,7 +15,8 @@ App.use(express.static('public'))
 // me permite cargar archivos y contenido desde el diresctorios public
 
 
-App.use(express.urlencoded({extended: true}))     // con esto podemos entender y recibir datos desde un formulario, proveniente de una page html
+App.use(express.urlencoded({extended: true}))    
+ // con esto podemos entender y recibir datos desde un formulario, proveniente de una page html
 
 /* const router = express.Router();  */
 // router de express.Ayuda a crear manejadores de rutas encadenables
@@ -39,3 +40,31 @@ App.listen(PORT, () => { console.log(`Server on, in port : ${PORT}`)  });
  
 
     //---------------------------------------------------------------
+
+
+    //------------ HTTP server ---------------
+   /*  console.clear();
+    import { createServer } from 'http';
+
+    const httpServer = createServer(( req, res ) =>{  
+        ---------------------------
+        aca podemos elegir por metodo de entrada que vamos a hacer
+        console.log(req.method) --> me devuelve que pet está entrando y too 
+        console.log(req.url) --> me devuelve la ruta a la carpeta
+        ------------------------
+        aca va las cabeceras del metodo
+        console.log(req.headers)
+
+        ------------------------
+        aca van los datos del body
+
+
+
+
+---------- vid: 5 -----------
+        
+        res.end('Recibido')
+        console.log('Peticion recibida');
+    })
+    
+    httpServer.listen(3000, )  */

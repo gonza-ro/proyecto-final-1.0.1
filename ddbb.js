@@ -1,11 +1,11 @@
-export const PRODU_DDBB = [
+export const PRODU_DDBB = [ {}, {}, {}, 
     {
       "id": "9112",
       "state": 0,
       "picture": "http://placehold.it/32x32",
       "age": 23,
       "eyeColor": "brown",
-      "name": "Lola Sanders",
+      "name": "Talos",
       "gender": "female",
       "email": "lolasanders@nimon.com",
       "phone": "+1 (899) 404-2629",
@@ -17,7 +17,7 @@ export const PRODU_DDBB = [
       "picture": "http://placehold.it/32x32",
       "age": 33,
       "eyeColor": "green",
-      "name": "Guzman Stout",
+      "name": "Guzman",
       "gender": "male",
       "email": "guzmanstout@nimon.com",
       "phone": "+1 (911) 568-2542",
