@@ -3,13 +3,13 @@ import express from "express";
 import { PRODU_DDBB } from '../ddbb.js';
 
 
-const accountRouter = express.Router();
+const RouterProducto = express.Router();
 // Router too contiene metodos : use, get, post, etc.
 //Luego la metemos dentro de accountRouter
 
 
 // es un midd. Aca entra en juego (next) --> es un CB
-accountRouter.use((req, res, next) =>{   // esta func se ejecuta antes que el end-point
+RouterProducto.use((req, res, next) =>{   // esta func se ejecuta antes que el end-point
 
 /* console.log(req.ip) */
 
@@ -18,7 +18,7 @@ accountRouter.use((req, res, next) =>{   // esta func se ejecuta antes que el en
 //--------------------------------------------------
 // Obten detalles de una cuenta a partir de su ID. 
 //Vamos a usar el Cliente Postman, para las peticiones http
-accountRouter.get("/:id", (req, res) => {   
+RouterProducto.get("/:id", (req, res) => {   
   const { id } = req.params;
   const {idProduct} = PRODU_DDBB.find((e) => e.id === id);
   /* const {nameProduct} = PRODU_DDBB.find((us) => us.name === name); */
@@ -32,7 +32,7 @@ accountRouter.get("/:id", (req, res) => {
 
 //-------------------------------------------------
 // Crear una cuenta nueva, a partir de ID, y name
-accountRouter.post("/", (req, res) => {
+RouterProducto.post("/", (req, res) => {
   const { id} = req.body;
   const {idProduct} = PRODU_DDBB.find((us) => us.id === id);
   const {nameProduct} = PRODU_DDBB.find((us) => us.name === name);
@@ -65,7 +65,7 @@ accountRouter.post("/", (req, res) => {
 
 //--------------------------------------------------
 // Actualizar una cuenta por su nombre
-accountRouter.put("/:id", (req, res) => {
+RouterProducto.put("/:id", (req, res) => {
   const { id } = req.params;
   const { name } = req.body;
  const product = PRODU_DDBB.find((pro) => pro.id === id);
@@ -84,7 +84,7 @@ accountRouter.put("/:id", (req, res) => {
 
 //-------------------------------------------------------
 // Eliminar un a cuenta
-accountRouter.delete("/:id", (req, res) => {
+RouterProducto.delete("/:id", (req, res) => {
   const { id } = req.params;
   const proIndex = PRODU_DDBB.findIndex((us) => us.id === id);
   // findIndex --> si encuentra = true. Si no = -1
@@ -100,7 +100,7 @@ accountRouter.delete("/:id", (req, res) => {
 });
 
 
-export default accountRouter;
+export default RouterProducto;
 
 
 

@@ -1,7 +1,8 @@
 console.clear();
-import express from 'express'
+import express from 'express';
 import dotenv from 'dotenv';
-import accountRouter from './routers/productos.js';  // aca lo meto como un midd
+import RouterProducto from './routers/productos.js';  // aca lo meto como un midd
+import accountRouter from './routers/carritos.js';
 import { Server } from 'socket.io';
 
 
@@ -26,6 +27,7 @@ App.use(express.json())  // --> para entender el body en formato JSON
 App.use(express.text());  // ---> para entender el body en formato text 
 
 App.use(accountRouter);
+App.use(RouterProducto);
 //---------------------------------------------------
 
 
