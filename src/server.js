@@ -1,8 +1,9 @@
 console.clear();
 import express from 'express';
 import dotenv from 'dotenv';
-import RouterProducto from './routers/productos.js';  // aca lo meto como un midd
-import carritoRouter from './routers/carritos.js';
+import PRODU_DDBB from '../dist/services/ddbb.js'
+import RouterProducto from './routers/api/productoApi.js';  // aca lo meto como un midd
+import carritoRouter from './routers/api/carritoApi.js';
 import { Server } from 'socket.io';
 
 
@@ -41,4 +42,5 @@ const PORT = dotenv.PORT || 8080
 App.listen(PORT, () => { console.log(`Server on, in port : ${PORT}`)  });
  
 
-//---------------------------------------------------------------
+//------------------------------------------
+/* export default RouterProducto; */
