@@ -1,6 +1,6 @@
 import express from "express";
 
-import { PRODU_DDBB } from '../ddbb.js';
+import { PRODU_DDBB } from '../../dist/services/ddbb.js';
 
 
 const RouterProducto = express.Router();
@@ -102,44 +102,6 @@ RouterProducto.delete("/:id", (req, res) => {
 
 export default RouterProducto;
 
-
-
-//---------------------- Usando el Require --------------------------
-// practica con module.exports = {suma, resta, multiplicacion}
-//file = operaciones.js
-/* const suma = (numA, numB) =>{ return numA + numB }
-
-const resta = (numA, numB) =>{ return numA - numB }
-
-const multiplicacion = (numA, numB) =>{ return numA * numB } */
-
-
-//---------------------
-
-//file = index.js
-/* const operaciones = require('/operaciones.js')
-console.log(operaciones);  --> node index.js */
-
-
-//---------------------
-
-//file = users.json
-
-//
-/* {
-  'users': [
-    {
-    'name': 'Talos',
-    'canal': 'Deva'
-    },
-    {
-      'name': 'Gonza',
-      'age': 27
-    }
-  ]
-}
-
---> lo mustro por consola --> console.log(users) --> y lo ejecuto con node users.js  vid:3  */ 
 
 //----------- modelo OSI ------------ vid:4
 //standar de intercomunicacion entre sistemas

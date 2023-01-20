@@ -1,28 +1,69 @@
 import express from "express";
 
-import { PRODU_DDBB } from '../ddbb.js';
+import { PRODU_DDBB } from "../../dist/services/ddbb.js";
 
-
-const accountRouter = express.Router();
+const carritoRouter = express.Router();
 // Router too contiene metodos : use, get, post, etc.
 //Luego la metemos dentro de accountRouter
 
-
 // es un midd. Aca entra en juego (next) --> es un CB
-accountRouter.use((req, res, next) =>{;   // esta func se ejecuta antes que el end-point
-     
-//* console.log(req.ip) */
+carritoRouter.use((req, res, next) => {
+  // esta func se ejecuta antes que el end-point
 
-    next();
-})
+  //* console.log(req.ip) */
+
+  next();
+});
+
+//----------------------------------------------------------------------
+
+//--------------- CLASE CARRITO ---------------
+export class Carrito {
+  constructor() {
+    let id = 0;
+    let carritos = [];
+    /* PRODU_DDBB.forEach(ele => console.log(ele)); */
+  }
+
+  listar(id) {
+    this.id = this.carritos.find((car) => car.id == id);
+    console.log("El Id ingresado por parametro --> " + id);
+    return id || { error: "No se encuentra el carrito" };
+  }
+
+  listarAll() {
+    /*  this.carri = PRODU_DDBB.forEach(ele => console.log(ele)); */
+    console.log(this.carritos);
+    return this.carritos
+      ? this.carritos
+      : { error: "No hay carritos cargados" };
+  }
+
+  guardar(carro) {
+    carro.id = ++this.id;
+    this.carritos.push(carro);
+  }
+
+  actualizar(carro, id) {
+    carro.id = Number(id);
+    let index = this.carritos.findIndex((carr) => carr.id == id);
+    this.carritos.splice(index, 1, carro);
+  }
+
+  borrar(id) {
+    let index = this.carritos.findIndex((carr) => carr.id == id);
+    return this.carritos.splice(index, 1);
+  }
+}
+
 //--------------------------------------------------
 // Obten detalles de una cuenta a partir de su ID
-accountRouter.get("/:id", (req, res) => {
+carritoRouter.get("/:id", (req, res) => {
   const { id } = req.params;
   const product = PRODU_DDBB.find((us) => us.id === id);
 
   if (!product) {
-    return res.status(404).send('Producto no encontrado');
+    return res.status(404).send("Producto no encontrado");
   }
 
   return res.send(product);
@@ -30,17 +71,17 @@ accountRouter.get("/:id", (req, res) => {
 
 //-------------------------------------------------
 // Crear una cuenta nueva, a partir de ID, y name
-accountRouter.post("/", (req, res) => {
+carritoRouter.post("/", (req, res) => {
   const { id, name } = req.body;
 
   if (!id || !name) {
-    return res.status(400).send('No existe');
+    return res.status(400).send("No existe");
   }
 
   const product = PRODU_DDBB.find((us) => us.id === id);
 
   if (product) {
-    return res.status(409).send('Ya existe el producto');
+    return res.status(409).send("Ya existe el producto");
   }
   // error de conflicto(409) : existe lo que quiero crear
 
@@ -54,7 +95,7 @@ accountRouter.post("/", (req, res) => {
 
 //--------------------------------------------------
 // Actualizar una cuenta por su nombre
-accountRouter.patch("/:id", (req, res) => {
+carritoRouter.patch("/:id", (req, res) => {
   const { id } = req.params;
   const { name } = req.body;
 
@@ -75,11 +116,11 @@ accountRouter.patch("/:id", (req, res) => {
 
 //-------------------------------------------------------
 // Eliminar un a cuenta
-accountRouter.delete("/:id", (req, res) => {
+carritoRouter.delete("/:id", (req, res) => {
   const { id } = req.params;
   const proIndex = PRODU_DDBB.findIndex((us) => us.id === id);
   // findIndex --> si encuentra = true. Si no = -1
-  
+
   if (proIndex === -1) {
     return res.status(404).send();
   }
@@ -90,5 +131,4 @@ accountRouter.delete("/:id", (req, res) => {
   // se tiene que mandar una res, para que no se quede tildado
 });
 
-
-export default accountRouter;
+export default carritoRouter;
