@@ -1,40 +1,28 @@
+import productos from "../utils/claseProducto.js"
+import express from "express";
 
+const RouterProducto = express.Router();
 
-export class Producto {
-  constructor() {
-    let id = 0;
-    let productos = [];
-    let producto = {};
-    /* PRODU_DDBB.forEach(ele => console.log(ele)); */
-  }
+RouterProducto.get('/', (req,res) => {
+    res.json(productos.listarAll())
+})
 
-  listar(id) {
-    this.id = this.productos.find((pro) => pro.id == id);
-    console.log("El Id ingresado por parametro --> " + id);
-    return id || { error: "No se encuentra el producto" };
-  }
+RouterProducto.post('/guardar', (req,res) => {
+    const  prod = req.body
+    productos.guardar(prod)
+    res.json(productos)
+})
 
-  listarAll() {
-    /*  this.carri = PRODU_DDBB.forEach(ele => console.log(ele)); */
-    console.log(this.productos);
-    return this.productos
-      ? this.productos
-      : { error: "No hay productos cargados" };
-  }
+RouterProducto.put('/:id', (req,res) => {
+    const {id} = req.params
+    const prod = req.body
+    productos.actualizar(prod,id)
+    res.json(prod)
+})
+RouterProducto.delete('/:id', (req,res) => {
+    let { id } = req.params
+    let prod = productos.borrar(id)
+    res.json(prod)
+})
 
-  guardar(producto) {
-    productos.id = ++this.id;
-    this.productos.push(producto);
-  }
-
-  actualizar(producto, id) {
-    producto.id = Number(id);
-    let index = this.productos.findIndex((pro) => pro.id == id);
-    this.producttos.splice(index, 1, producto);
-  }
-
-  borrar(id) {
-    let index = this.productos.findIndex((pro) => pro.id == id);
-    return this.productos.splice(index, 1);
-  }
-}
+export default RouterProducto
